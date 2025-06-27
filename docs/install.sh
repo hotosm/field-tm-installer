@@ -381,7 +381,7 @@ install_docker() {
         return 0
     fi
 
-    echo "Docker is required for FMTM to run."
+    echo "Docker is required for Field-TM to run."
     echo
     echo "Do you want to install Docker? (y/n)"
     echo
@@ -489,7 +489,7 @@ get_repo() {
     # Files in a random temp dir
     cd "${TEMP_DIR}" || exit 1
 
-    repo_url="https://github.com/hotosm/fmtm.git"
+    repo_url="https://github.com/hotosm/field-tm.git"
 
     echo "Cloning repo $repo_url to dir: ${TEMP_DIR}"
     echo
@@ -497,8 +497,8 @@ get_repo() {
 
     # Check for existing .env files
     existing_dotenv=""
-    if [ "${RUN_AS_ROOT}" = true ] && sudo test -f "/root/fmtm/${DOTENV_NAME}"; then
-        existing_dotenv="/root/fmtm/${DOTENV_NAME}"
+    if [ "${RUN_AS_ROOT}" = true ] && sudo test -f "/root/field-tm/${DOTENV_NAME}"; then
+        existing_dotenv="/root/field-tm/${DOTENV_NAME}"
     elif [ -f "${current_dir}/${DOTENV_NAME}" ]; then
         existing_dotenv="${current_dir}/${DOTENV_NAME}"
     fi
@@ -507,11 +507,11 @@ get_repo() {
         echo
         echo "Found existing dotenv file."
         echo
-        echo "Copying $existing_dotenv --> ${TEMP_DIR}/fmtm/${DOTENV_NAME}"
+        echo "Copying $existing_dotenv --> ${TEMP_DIR}/field-tm/${DOTENV_NAME}"
         if [ "${RUN_AS_ROOT}" = true ]; then
-            sudo cp "$existing_dotenv" "${TEMP_DIR}/fmtm/"
+            sudo cp "$existing_dotenv" "${TEMP_DIR}/field-tm/"
         else
-            cp "$existing_dotenv" "${TEMP_DIR}/fmtm/"
+            cp "$existing_dotenv" "${TEMP_DIR}/field-tm/"
         fi
     fi
 }
@@ -617,22 +617,22 @@ check_external_database() {
     if [ "$EXTERNAL_DB" = "True" ]; then
         echo
         echo "Please enter the database host."
-        read -erp "FMTM DB Host: " FMTM_DB_HOST
+        read -erp "Field-TM DB Host: " FMTM_DB_HOST
         echo
         export FMTM_DB_HOST=${FMTM_DB_HOST}
 
         echo "Please enter the database name."
-        read -erp "FMTM DB Name: " FMTM_DB_NAME
+        read -erp "Field-TM DB Name: " FMTM_DB_NAME
         echo
         export FMTM_DB_NAME=${FMTM_DB_NAME}
 
         echo "Please enter the database user."
-        read -erp "FMTM DB User: " FMTM_DB_USER
+        read -erp "Field-TM DB User: " FMTM_DB_USER
         echo
         export FMTM_DB_USER=${FMTM_DB_USER}
 
         echo "Please enter the database password."
-        read -erp "FMTM DB Password: " FMTM_DB_PASSWORD
+        read -erp "Field-TM DB Password: " FMTM_DB_PASSWORD
         echo
         export FMTM_DB_PASSWORD=${FMTM_DB_PASSWORD}
 
@@ -680,11 +680,11 @@ set_minio_s3_creds() {
 }
 
 set_domains() {
-    heading_echo "FMTM Domain Name"
+    heading_echo "Field-TM Domain Name"
 
-    echo "To run FMTM you must own a domain name."
+    echo "To run Field-TM you must own a domain name."
     while true; do
-        read -erp "Enter a valid domain name you wish to run FMTM from: " fmtm_domain
+        read -erp "Enter a valid domain name you wish to run Field-TM from: " fmtm_domain
 
         if [ "$fmtm_domain" = "" ]; then
             echo "Invalid input!"
@@ -698,7 +698,7 @@ set_domains() {
     current_ip=$(hostname -I | cut -d' ' -f1)
 
     echo
-    echo "Using $fmtm_domain as your main domain for FMTM."
+    echo "Using $fmtm_domain as your main domain for Field-TM."
     echo
     yellow_echo "Please ensure the following DNS entries are set:"
     echo
@@ -714,7 +714,7 @@ set_domains() {
     read -erp "Once these DNS entries are set and valid, press ENTER to continue."
 
     heading_echo "Certificates"
-    echo "FMTM will automatically generate SSL (HTTPS) certificates for your domain name."
+    echo "Field-TM will automatically generate SSL (HTTPS) certificates for your domain name."
     echo
     while true; do
         echo "Enter an email address you wish to use for certificate generation."
@@ -767,7 +767,7 @@ check_change_port() {
         echo "Using $fmtm_port"
         export FMTM_DEV_PORT="$fmtm_port"
     else
-        echo "Using port 7050 for FMTM."
+        echo "Using port 7050 for Field-TM."
     fi
 }
 
@@ -783,7 +783,7 @@ generate_dotenv() {
     else
         echo "Downloading .env.example from repo."
         echo
-        curl -LO "https://raw.githubusercontent.com/hotosm/fmtm/${BRANCH_NAME:-development}/.env.example"
+        curl -LO "https://raw.githubusercontent.com/hotosm/field-tm/${BRANCH_NAME:-development}/.env.example"
 
         echo
         echo "substituting variables from .env.example --> ${DOTENV_NAME}"
@@ -799,17 +799,17 @@ generate_dotenv() {
     echo
     cat ${DOTENV_NAME}
     echo
-    if [ "${RUN_AS_ROOT}" = true ] && sudo test ! -f "/root/fmtm/${DOTENV_NAME}"; then
-        echo "Copying generated dotenv to /root/fmtm/${DOTENV_NAME}"
-        cp "${DOTENV_NAME}" "/root/fmtm/${DOTENV_NAME}" || true
+    if [ "${RUN_AS_ROOT}" = true ] && sudo test ! -f "/root/field-tm/${DOTENV_NAME}"; then
+        echo "Copying generated dotenv to /root/field-tm/${DOTENV_NAME}"
+        cp "${DOTENV_NAME}" "/root/field-tm/${DOTENV_NAME}" || true
     elif [ ! -f "/home/svcfmtm/${DOTENV_NAME}" ]; then
-        echo "Copying generated dotenv to /home/svcfmtm/fmtm/${DOTENV_NAME}"
-        cp "${DOTENV_NAME}" "/home/svcfmtm/fmtm/${DOTENV_NAME}" || true
+        echo "Copying generated dotenv to /home/svcfmtm/field-tm/${DOTENV_NAME}"
+        cp "${DOTENV_NAME}" "/home/svcfmtm/field-tm/${DOTENV_NAME}" || true
     fi
 }
 
 prompt_user_gen_dotenv() {
-    heading_echo "Generate dotenv config for FMTM"
+    heading_echo "Generate dotenv config for Field-TM"
 
     # Exit if user does not overwrite existing dotenv
     if check_existing_dotenv; then
@@ -852,7 +852,7 @@ run_compose_stack() {
     heading_echo "Building Frontend Image"
     docker compose -f ${COMPOSE_FILE} build ui
 
-    heading_echo "Starting FMTM"
+    heading_echo "Starting Field-TM"
     docker compose -f ${COMPOSE_FILE} up \
         --detach --remove-orphans --force-recreate
 }
@@ -871,7 +871,7 @@ final_output() {
         suffix=":${FMTM_DEV_PORT:-7050}"
     fi
 
-    heading_echo "FMTM Setup Complete"
+    heading_echo "Field-TM Setup Complete"
     heading_echo "Services" "green"
     echo "Frontend:     ${proto}://${FMTM_DOMAIN}${suffix}"
     echo "API:          ${proto}://api.${FMTM_DOMAIN}${suffix}"
@@ -909,7 +909,7 @@ install_fmtm() {
 
     get_repo
     # Work in generated temp dir
-    local repo_dir="${TEMP_DIR}/fmtm"
+    local repo_dir="${TEMP_DIR}/field-tm"
     cd "${repo_dir}" || exit 1
 
     if [ -f "${repo_dir}/${DOTENV_NAME}" ]; then

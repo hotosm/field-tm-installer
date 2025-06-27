@@ -1,29 +1,29 @@
-# FMTM Installer
+# Field-TM Installer
 
 <!-- markdownlint-disable -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/hotosm/fmtm/main/docs/images/hot_logo.png" style="width: 200px;" alt="HOT"></a>
+  <img src="https://raw.githubusercontent.com/hotosm/field-tm/main/docs/images/hot_logo.png" style="width: 200px;" alt="HOT"></a>
 </p>
 <p align="center">
-  <em>Easy install script for Field Tasking Mapping Manager (FMTM).</em>
+  <em>Easy install script for Field Tasking Manager (Field-TM).</em>
 </p>
 <p align="center">
-  <a href="https://github.com/hotosm/fmtm-installer/releases" target="_blank">
-      <img src="https://img.shields.io/github/v/release/hotosm/fmtm-installer?logo=github" alt="Version">
+  <a href="https://github.com/hotosm/field-tm-installer/releases" target="_blank">
+      <img src="https://img.shields.io/github/v/release/hotosm/field-tm-installer?logo=github" alt="Version">
   </a>
   <a href="https://github.com/sponsors/hotosm" target="_blank">
       <img src="https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors&logoColor=#EA4AAA" alt="CI Build">
   </a>
-  <a href="https://github.com/hotosm/fmtm-installer/blob/main/LICENSE.md" target="_blank">
-      <img src="https://img.shields.io/github/license/hotosm/fmtm-installer.svg" alt="Publish Docs">
+  <a href="https://github.com/hotosm/field-tm-installer/blob/main/LICENSE.md" target="_blank">
+      <img src="https://img.shields.io/github/license/hotosm/field-tm-installer.svg" alt="Publish Docs">
   </a>
 </p>
 
 ---
 
-🚀 **Run**: <a href="https://hotosm.github.io/fmtm-installer/install.sh" target="_blank">https://hotosm.github.io/fmtm-installer/install.sh</a>
+🚀 **Run**: <a href="https://hotosm.github.io/field-tm-installer/install.sh" target="_blank">https://hotosm.github.io/field-tm-installer/install.sh</a>
 
-🖥️ **Source Code**: <a href="https://github.com/hotosm/fmtm-installer" target="_blank">https://github.com/hotosm/fmtm-installer</a>
+🖥️ **Source Code**: <a href="https://github.com/hotosm/field-tm-installer" target="_blank">https://github.com/hotosm/field-tm-installer</a>
 
 ---
 
@@ -31,7 +31,7 @@
 
 > [!WARNING]
 > For now this repo is unmaintained, and instead might become a paid convenience
-> script for organizational FMTM installation.
+> script for organizational Field-TM installation.
 >
 > Feel free to use at your own risk.
 
