@@ -108,19 +108,19 @@ check_user_not_root() {
         yellow_echo "This script must run as a non-privileged user account."
         echo
 
-        if id "svcfmtm" &>/dev/null; then
-            yellow_echo "User 'svcfmtm' found."
+        if id "svcftm" &>/dev/null; then
+            yellow_echo "User 'svcftm' found."
         else
-            yellow_echo "Creating user 'svcfmtm'."
-            useradd -m -d /home/svcfmtm -s /bin/bash svcfmtm 2>/dev/null
+            yellow_echo "Creating user 'svcftm'."
+            useradd -m -d /home/svcftm -s /bin/bash svcftm 2>/dev/null
         fi
 
         echo
         yellow_echo "Temporarily adding to sudoers list."
-        echo "svcfmtm ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/fmtm-sudoers >/dev/null
+        echo "svcftm ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/fmtm-sudoers >/dev/null
 
         echo
-        yellow_echo "Rerunning this script as user 'svcfmtm'."
+        yellow_echo "Rerunning this script as user 'svcftm'."
         echo
 
         if ! command -v ps &>/dev/null; then
@@ -141,23 +141,23 @@ check_user_not_root() {
         # Check if input is direct bash script call (i.e. ends in .sh)
         ext="$(basename "$0")"
         if [ "${ext: -3}" = ".sh" ]; then
-            # User called script directly, copy to /home/svcfmtm/install.sh
+            # User called script directly, copy to /home/svcftm/install.sh
             root_script_path="$(readlink -f "$0")"
-            user_script_path="/home/svcfmtm/$(basename "$0")"
+            user_script_path="/home/svcftm/$(basename "$0")"
             cp "$root_script_path" "$user_script_path"
-            chown svcfmtm:svcfmtm "$user_script_path"
+            chown svcftm:svcftm "$user_script_path"
             chmod +x "$user_script_path"
 
             machinectl --quiet shell \
                 --setenv=RUN_AS_ROOT=true \
                 --setenv=DOCKER_HOST="${DOCKER_HOST}" \
-                svcfmtm@ /bin/bash -c "$user_script_path"
+                svcftm@ /bin/bash -c "$user_script_path"
         else
             # User called script remotely, so do the same
             machinectl --quiet shell \
                 --setenv=RUN_AS_ROOT=true \
                 --setenv=DOCKER_HOST="${DOCKER_HOST}" \
-                svcfmtm@ /bin/bash -c "curl -fsSL https://get.field.hotosm.org | bash"
+                svcftm@ /bin/bash -c "curl -fsSL https://get.field.hotosm.org | bash"
         fi
 
         exit 0
@@ -289,7 +289,7 @@ update_docker_ps_format() {
 EOF
     fi
 
-    # svcfmtm user
+    # svcftm user
     mkdir -p ~/.docker
     touch ~/.docker/config.json
     tee ~/.docker/config.json <<EOF > /dev/null 2>&1
@@ -802,9 +802,9 @@ generate_dotenv() {
     if [ "${RUN_AS_ROOT}" = true ] && sudo test ! -f "/root/field-tm/${DOTENV_NAME}"; then
         echo "Copying generated dotenv to /root/field-tm/${DOTENV_NAME}"
         cp "${DOTENV_NAME}" "/root/field-tm/${DOTENV_NAME}" || true
-    elif [ ! -f "/home/svcfmtm/${DOTENV_NAME}" ]; then
-        echo "Copying generated dotenv to /home/svcfmtm/field-tm/${DOTENV_NAME}"
-        cp "${DOTENV_NAME}" "/home/svcfmtm/field-tm/${DOTENV_NAME}" || true
+    elif [ ! -f "/home/svcftm/${DOTENV_NAME}" ]; then
+        echo "Copying generated dotenv to /home/svcftm/field-tm/${DOTENV_NAME}"
+        cp "${DOTENV_NAME}" "/home/svcftm/field-tm/${DOTENV_NAME}" || true
     fi
 }
 
@@ -878,14 +878,14 @@ final_output() {
     echo "S3 Buckets:   ${proto}://s3.${FMTM_DOMAIN}${suffix}"
     echo "ODK Central:  ${proto}://odk.${FMTM_DOMAIN}${suffix}"
     heading_echo "Inspect Containers" "green"
-    echo "To login as svcfmtm and inspect the containers, run:"
+    echo "To login as svcftm and inspect the containers, run:"
     echo
-    echo "$ machinectl shell svcfmtm@"
+    echo "$ machinectl shell svcftm@"
     echo "$ docker ps"
     echo
     echo "Alternatively, to run as the current user:"
     echo
-    echo "$ export DOCKER_HOST=unix:///run/user/$(id -u svcfmtm)/docker.sock"
+    echo "$ export DOCKER_HOST=unix:///run/user/$(id -u svcftm)/docker.sock"
     echo "$ docker ps"
     echo
     heading_echo "ODK Central Credentials" "green"

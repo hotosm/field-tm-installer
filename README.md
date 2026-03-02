@@ -41,7 +41,7 @@ On a Linux-based machine with `bash` installed, run the script:
 
 > Note: it is best to run this script as a user other than root.
 >
-> However, if you run as root, a user svcfmtm will be created for you.
+> However, if you run as root, a user svcftm will be created for you.
 
 ```bash
 curl -L https://get.field.hotosm.org -o install.sh
